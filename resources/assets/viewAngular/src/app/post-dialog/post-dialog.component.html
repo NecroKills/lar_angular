@@ -1,36 +1,39 @@
 <div fxLayout="column" fxLayoutAlign="space-around left">
     <div fxLaylout="row" fxLayoutAlign="space-between">
         <mat-form-field fxFlex="50">
-            <input matInput placeholder="Seu nome">
+            <input matInput placeholder="Seu nome" [(ngModel)]="dados.post.nome">
             <mat-hint>Digite aqui seu nome</mat-hint>
         </mat-form-field>
         <mat-form-field fxFlex="40">
-            <input matInput placeholder="Seu email">
+            <input matInput placeholder="Seu email" [(ngModel)]="dados.post.email">
             <mat-hint>Digite aqui seu email</mat-hint>
         </mat-form-field>
     </div>
     <div fxLaylout="row" fxLayoutAlign="space-between">
         <mat-form-field fxFlex="50">
-            <input matInput placeholder="Titulo da mensagem">
+            <input matInput placeholder="Titulo da mensagem" [(ngModel)]="dados.post.titulo">
         </mat-form-field>
         <mat-form-field fxFlex="40">
-            <input matInput placeholder="Subtitulo de mensagem">
+            <input matInput placeholder="Subtitulo de mensagem" [(ngModel)]="dados.post.subtitulo">
         </mat-form-field>
     </div>
     <mat-form-field>
-        <textarea matInput placeholder="Digite aqui sua mensagem"></textarea>
+        <textarea matInput placeholder="Digite aqui sua mensagem" [(ngModel)]="dados.post.mensagem"></textarea>
     </mat-form-field>
 </div>
 
-<input type="file" style="display: none;" #fileInput>
+<input type="file" style="display: none;" (change)="mudouArquivo($event)" #fileInput>
 <button mat-stroked-button color="primary" (click)="fileInput.click()">
   <mat-icon>add_a_photo</mat-icon>
   Adicionar uma Foto
 </button>
-
+<p *ngIf="nomeArquivo!=''">
+    <strong>Arquivo: </strong>{{nomeArquivo}}
+    <mat-icon color="primary">done</mat-icon>
+</p>
 <br><br>
 
 <div style="text-align: center;">
-    <button mat-button color="primary">OK</button>
-    <button mat-button color="warn">Cancelar</button>
+    <button mat-button color="primary" (click)="salvarFormulario()">OK</button>
+    <button mat-button color="warn" (click)="cancelarFormulario()">Cancelar</button>
 </div>

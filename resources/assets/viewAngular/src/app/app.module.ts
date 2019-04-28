@@ -54,6 +54,11 @@ import { PostDialogComponent } from './post-dialog/post-dialog.component';
   providers: [
     {provide:APP_BASE_HREF, useValue:'../../../public/js'}
   ],
+
+  entryComponents : [
+    PostDialogComponent
+  ],
+  
   bootstrap: [AppComponent]
 })
 export class AppModule { }
