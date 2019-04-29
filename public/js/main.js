@@ -78,7 +78,7 @@ module.exports = ".float-button {\r\n    position: fixed;\r\n    bottom: 40px;\r
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-toolbar color=\"primary\">\n    <span>Projeto: Laravel + Angular</span>\n</mat-toolbar>\n\n<mat-divider></mat-divider>\n\n<div fxLayout=\"row wrap\" fxLayoutAlign=\"space-around stretch\">\n    <app-post *ngFor=\"let p of posts\" [post]=\"p\"></app-post>\n</div>\n<button mat-fab color=\"primary\" class=\"float-button\" (click)=\"openDialog()\">\n  <mat-icon>add</mat-icon>\n</button>"
+module.exports = "<mat-toolbar color=\"primary\">\n    <span>Projeto Álbum de Fotos usando: Laravel + Angular Material 6.0</span>\n</mat-toolbar>\n\n<mat-divider></mat-divider>\n\n<div fxLayout=\"row wrap\" fxLayoutAlign=\"space-around stretch\">\n    <app-post *ngFor=\"let p of posts\" [post]=\"p\"></app-post>\n</div>\n<button mat-fab color=\"primary\" class=\"float-button\" (click)=\"openDialog()\">\n  <mat-icon>add</mat-icon>\n</button>"
 
 /***/ }),
 
