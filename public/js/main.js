@@ -399,6 +399,13 @@ var PostService = /** @class */ (function () {
             }
         });
     };
+    PostService.prototype.like = function (id) {
+        var _this = this;
+        this.http.get('/api/like/' + id).subscribe(function (event) {
+            var p = _this.posts.find(function (p) { return p.id == id; });
+            p.likes = event.likes;
+        });
+    };
     PostService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
         __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
@@ -457,7 +464,7 @@ module.exports = ".card {\r\n    max-width: 300px;\r\n    margin: 10px;\r\n}\r\n
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-card fxFlex class=\"card\">\n    <mat-card-header>\n        <div mat-card-avatar></div>\n        <mat-card-title>{{ post.titulo }}</mat-card-title>\n        <mat-card-subtitle>{{ post.subtitulo }}</mat-card-subtitle>\n    </mat-card-header>\n    <img mat-card-image src=\"/storage/{{post.arquivo}}\" alt=\"Photo\">\n    <mat-card-content>\n        <p>\n            {{post.mensagem}}\n        </p>\n    </mat-card-content>\n    <mat-card-actions>\n        <button mat-button>LIKE</button>\n        <button mat-button>SHARE</button>\n    </mat-card-actions>\n</mat-card>"
+module.exports = "<mat-card fxFlex class=\"card\">\n    <mat-card-header>\n        <div mat-card-avatar></div>\n        <mat-card-title>{{ post.titulo }}</mat-card-title>\n        <mat-card-subtitle>{{ post.subtitulo }}</mat-card-subtitle>\n    </mat-card-header>\n    <img mat-card-image src=\"/storage/{{post.arquivo}}\" alt=\"Photo\">\n    <mat-card-content>\n        <p>\n            {{post.mensagem}}\n        </p>\n    </mat-card-content>\n    <mat-card-actions>\n        <button mat-button color=\"primary\" (click)=\"like()\">LIKE</button>\n        <button mat-button>SHARE</button>\n        <mat-icon color=\"warn\" *ngIf=\"post.likes>0\" [matBadge]=\"post.likes\" matBadgePosition=\"above after\" matBadgeColor=\"warn\" matBadgeOverlap=\"false\">favorite</mat-icon>\n    </mat-card-actions>\n</mat-card>"
 
 /***/ }),
 
@@ -471,8 +478,9 @@ module.exports = "<mat-card fxFlex class=\"card\">\n    <mat-card-header>\n     
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PostComponent", function() { return PostComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _post__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../post */ "./src/app/post.ts");
+/* harmony import */ var _post_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../post.service */ "./src/app/post.service.ts");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _post__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../post */ "./src/app/post.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -484,22 +492,27 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
 var PostComponent = /** @class */ (function () {
-    function PostComponent() {
+    function PostComponent(PostService) {
+        this.PostService = PostService;
     }
     PostComponent.prototype.ngOnInit = function () {
     };
+    PostComponent.prototype.like = function () {
+        this.PostService.like(this.post.id);
+    };
     __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", _post__WEBPACK_IMPORTED_MODULE_1__["Post"])
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
+        __metadata("design:type", _post__WEBPACK_IMPORTED_MODULE_2__["Post"])
     ], PostComponent.prototype, "post", void 0);
     PostComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
             selector: 'app-post',
             template: __webpack_require__(/*! ./post.component.html */ "./src/app/post/post.component.html"),
             styles: [__webpack_require__(/*! ./post.component.css */ "./src/app/post/post.component.css")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [_post_service__WEBPACK_IMPORTED_MODULE_0__["PostService"]])
     ], PostComponent);
     return PostComponent;
 }());
