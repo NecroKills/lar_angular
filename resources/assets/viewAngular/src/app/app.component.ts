@@ -2,6 +2,7 @@ import { MatDialog } from '@angular/material';
 import { Component } from '@angular/core';
 import { Post } from './post';
 import { PostDialogComponent } from './post-dialog/post-dialog.component';
+import { PostService } from './post.service';
 
 @Component({
   selector: 'app-root',
@@ -10,20 +11,13 @@ import { PostDialogComponent } from './post-dialog/post-dialog.component';
 })
 export class AppComponent {
   title = 'app';
-  private posts: Post[] = [
-    new Post ("Joao", "Meu post", "Sub Joao", "joao@gmail.com", "minha msg"),
-    new Post ("Laiza", "Meu post", "Sub Laiza", "Laiza@gmail.com", "minha msg"),
-    new Post ("Maycon", "Meu post", "Sub Maycon", "Maycon@gmail.com", "minha msg"),
-    new Post ("Joao", "Meu post", "Sub Joao", "joao@gmail.com", "minha msg"),
-    new Post ("Laiza", "Meu post", "Sub Laiza", "Laiza@gmail.com", "minha msg"),
-    new Post ("Maycon", "Meu post", "Sub Maycon", "Maycon@gmail.com", "minha msg"),
-    new Post ("Joao", "Meu post", "Sub Joao", "joao@gmail.com", "minha msg"),
-    new Post ("Laiza", "Meu post", "Sub Laiza", "Laiza@gmail.com", "minha msg"),
-    new Post ("Maycon", "Meu post", "Sub Maycon", "Maycon@gmail.com", "minha msg"),
-  ];
+  public posts: Post[];
 
-  constructor(public dialog: MatDialog){}
+  constructor(public dialog: MatDialog,private postService: PostService){}
   
+  ngOnInit(){
+    this.posts = this.postService.posts;
+  }
   //Abrir o componente PostDialogComponent 
   openDialog(){
     const dialogRef = this.dialog.open(PostDialogComponent, {
