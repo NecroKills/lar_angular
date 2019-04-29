@@ -12,4 +12,4 @@ Route::get('/', 'PostControlador@store');
 
 Route::delete('/{id}', 'PostControlador@destroy');
 
-Route::get('/lik/{id}', 'PostControlador@linke');
+Route::get('/lik/{id}', 'PostControlador@like');

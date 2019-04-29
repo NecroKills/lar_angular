@@ -48,6 +48,7 @@ class PostControlador extends Controller
         $post->likes = 0;
 
         $post->save();
+        return response($post, 200);
     }
 
     /**

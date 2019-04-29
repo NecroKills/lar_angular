@@ -21,7 +21,7 @@ class CreatePostsTable extends Migration
             $table->string('subtitulo');
             $table->string('mensagem');
             $table->string('arquivo');
-            $table->string('likes');
+            $table->integer('likes');
 
             $table->timestamps();
         });
