@@ -399,11 +399,23 @@ var PostService = /** @class */ (function () {
             }
         });
     };
+    //Pega o id do posts que esta dando like e procura esse id dentro do array de posts.
+    //e vai pegar o like dele e atualizar no event.likes
     PostService.prototype.like = function (id) {
         var _this = this;
         this.http.get('/api/like/' + id).subscribe(function (event) {
             var p = _this.posts.find(function (p) { return p.id == id; });
             p.likes = event.likes;
+        });
+    };
+    //Apaga o post do banco de dados, 
+    //e se ele encontrar o objeto ele da um splice retirando o objeto que tem o id do array de posts;
+    PostService.prototype.apagar = function (id) {
+        var _this = this;
+        this.http.delete('/api/' + id).subscribe(function (event) {
+            var index = _this.posts.findIndex(function (p) { return p.id == id; });
+            if (index >= 0)
+                _this.posts.splice(index, 1);
         });
     };
     PostService = __decorate([
@@ -464,7 +476,7 @@ module.exports = ".card {\r\n    max-width: 300px;\r\n    margin: 10px;\r\n}\r\n
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-card fxFlex class=\"card\">\n    <mat-card-header>\n        <div mat-card-avatar></div>\n        <mat-card-title>{{ post.titulo }}</mat-card-title>\n        <mat-card-subtitle>{{ post.subtitulo }}</mat-card-subtitle>\n    </mat-card-header>\n    <img mat-card-image src=\"/storage/{{post.arquivo}}\" alt=\"Photo\">\n    <mat-card-content>\n        <p>\n            {{post.mensagem}}\n        </p>\n    </mat-card-content>\n    <mat-card-actions>\n        <button mat-button color=\"primary\" (click)=\"like()\">LIKE</button>\n        <button mat-button>SHARE</button>\n        <mat-icon color=\"warn\" *ngIf=\"post.likes>0\" [matBadge]=\"post.likes\" matBadgePosition=\"above after\" matBadgeColor=\"warn\" matBadgeOverlap=\"false\">favorite</mat-icon>\n    </mat-card-actions>\n</mat-card>"
+module.exports = "<mat-card fxFlex class=\"card\">\n    <mat-card-header>\n        <div mat-card-avatar></div>\n        <mat-card-title>{{ post.titulo }}</mat-card-title>\n        <mat-card-subtitle>{{ post.subtitulo }}</mat-card-subtitle>\n    </mat-card-header>\n    <img mat-card-image src=\"/storage/{{post.arquivo}}\" alt=\"Photo\">\n    <mat-card-content>\n        <p>\n            {{post.mensagem}}\n        </p>\n    </mat-card-content>\n    <mat-card-actions>\n        <button mat-button color=\"primary\" (click)=\"like()\">LIKE</button>\n        <button mat-button color=\"warn\" (click)=\"apagar()\">APAGAR</button>\n        <mat-icon color=\"warn\" *ngIf=\"post.likes>0\" [matBadge]=\"post.likes\" matBadgePosition=\"above after\" matBadgeColor=\"warn\" matBadgeOverlap=\"false\">favorite</mat-icon>\n    </mat-card-actions>\n</mat-card>"
 
 /***/ }),
 
@@ -494,13 +506,16 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var PostComponent = /** @class */ (function () {
-    function PostComponent(PostService) {
-        this.PostService = PostService;
+    function PostComponent(postService) {
+        this.postService = postService;
     }
     PostComponent.prototype.ngOnInit = function () {
     };
     PostComponent.prototype.like = function () {
-        this.PostService.like(this.post.id);
+        this.postService.like(this.post.id);
+    };
+    PostComponent.prototype.apagar = function () {
+        this.postService.apagar(this.post.id);
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),

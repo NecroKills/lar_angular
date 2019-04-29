@@ -49,6 +49,8 @@ export class PostService {
     })
   }
 
+  //Pega o id do posts que esta dando like e procura esse id dentro do array de posts.
+  //e vai pegar o like dele e atualizar no event.likes
   like(id: number) {
     this.http.get('/api/like/' + id).subscribe(
       (event: any) => {
@@ -58,7 +60,15 @@ export class PostService {
     );
   }
 
-
+  //Apaga o post do banco de dados, 
+  //e se ele encontrar o objeto ele da um splice retirando o objeto que tem o id do array de posts;
+  apagar(id: number){
+    this.http.delete('/api/' + id).subscribe((event) => {
+      let index = this.posts.findIndex((p) => p.id == id);
+      if(index >=0)
+      this.posts.splice(index, 1);
+    });
+  }
 
 
 
