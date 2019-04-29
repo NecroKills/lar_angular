@@ -4,118 +4,50 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Post;
 
 class PostControlador extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
+    public function index() {
         return Post::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         $post = new Post();
+        
+        $path = $request->file('arquivo')->store('imagens', 'public');
 
-        $path = $request->file('arquivo')->tore('imagens', 'public');
-
-        $post->nome = $request->nome;
-        $post->email = $request->email;
-        $post->titulo = $request->titulo;
+        $post->nome      = $request->nome;
+        $post->email     = $request->email;
+        $post->titulo    = $request->titulo;
         $post->subtitulo = $request->subtitulo;
-        $post->mensagem = $request->mensagem;
-        $post->path = $path;
-        $post->likes = 0;
+        $post->mensagem  = $request->mensagem;
+        $post->arquivo   = $path;
+        $post->likes     = 0;
 
         $post->save();
+        
         return response($post, 200);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
+    public function destroy($id) {
         $post = Post::find($id);
-        if(isset($post)){
+        if (isset($post)) {
             Storage::disk('public')->delete($post->arquivo);
             $post->delete();
             return 204;
         }
-        return response('Post não encontrado', 404);
+        return response('Post nao encontrado', 404);
     }
 
-    /**
-     * Recebe um id para dar like.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function like($id)
-    {
+    public function like($id) {
         $post = Post::find($id);
-        if(isset($post)){
+        if (isset($post)) {
             $post->likes++;
             $post->save();
             return $post;
         }
-        return response('ID não encontrado', 404);
+        return response('ID nao encontrado', 404);
     }
+
 }

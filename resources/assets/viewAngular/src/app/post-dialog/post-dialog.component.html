@@ -4,21 +4,26 @@
             <input matInput placeholder="Seu nome" [(ngModel)]="dados.post.nome">
             <mat-hint>Digite aqui seu nome</mat-hint>
         </mat-form-field>
+
         <mat-form-field fxFlex="40">
             <input matInput placeholder="Seu email" [(ngModel)]="dados.post.email">
             <mat-hint>Digite aqui seu email</mat-hint>
         </mat-form-field>
     </div>
+
     <div fxLaylout="row" fxLayoutAlign="space-between">
         <mat-form-field fxFlex="50">
             <input matInput placeholder="Titulo da mensagem" [(ngModel)]="dados.post.titulo">
+            <mat-hint>Digite aqui o titulo</mat-hint>
         </mat-form-field>
+
         <mat-form-field fxFlex="40">
             <input matInput placeholder="Subtitulo de mensagem" [(ngModel)]="dados.post.subtitulo">
+            <mat-hint>Digite aqui o subtitulo</mat-hint>
         </mat-form-field>
     </div>
     <mat-form-field>
-        <textarea matInput placeholder="Digite aqui sua mensagem" [(ngModel)]="dados.post.mensagem"></textarea>
+        <textarea matInput placeholder="Deixei aqui sua mensagem" [(ngModel)]="dados.post.mensagem"></textarea>
     </mat-form-field>
 </div>
 
